@@ -8,3 +8,5 @@ OpenCV colour detection (Please note: Installation has to be made seperately)
 Motor testing code
 
 Ultrasonic Distance Sensor code
+
+All of this code is done on Raspberry Pi 3 and may not work on other Operating Systems.
