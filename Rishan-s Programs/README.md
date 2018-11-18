@@ -9,6 +9,7 @@ https://www.pyimagesearch.com/2017/09/04/raspbian-stretch-install-opencv-3-pytho
 
 
 Motor testing code
+My GPIOs for my prototype robot is 8,7,20,21.
 
 Ultrasonic Distance Sensor code
 
