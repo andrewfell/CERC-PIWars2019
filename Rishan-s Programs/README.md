@@ -9,7 +9,19 @@ https://www.pyimagesearch.com/2017/09/04/raspbian-stretch-install-opencv-3-pytho
 
 
 Motor testing code
-My GPIOs for my prototype robot is 8,7,20,21.
+My GPIOs for my prototype robot is:
+Motor Wiring:
+8
+7
+20
+21.
+UDS Wiring:
+trig_pin_l = 15
+echo_pin_l = 14
+echo_pin_m = 17
+trig_pin_m = 4
+trig_pin_r = 18
+echo_pin_r = 23
 
 Ultrasonic Distance Sensor code
 
