@@ -1,0 +1,10 @@
+trig_pin_l = 15
+echo_pin_l = 14
+echo_pin_m = 17
+trig_pin_m = 4
+trig_pin_r = 18
+echo_pin_r = 23
+mc_in1=8
+mc_in2=7
+mc_in3=21                                       
+mc_in4=20
