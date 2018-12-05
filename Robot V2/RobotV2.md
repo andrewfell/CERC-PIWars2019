@@ -12,3 +12,10 @@ Input 1       | Left motor          | 8
 Input 2       | Left motor          | 7
 Input 3       | Right motor         | 21
 Input 4       | Right motor         | 20
+
+The GPIOZERO library is most useful for what we need (https://gpiozero.readthedocs.io/en/stable/index.html).  
+Install this onto your RPI aacording to this page: https://gpiozero.readthedocs.io/en/stable/installing.html
+
+Recommend starting with driving your robot's motors.  Use the 
+
+
