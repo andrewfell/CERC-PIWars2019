@@ -1,4 +1,4 @@
-Code for Robot V2 platform.  Note GPIO mapping is as currently follows:
+Code for Robot V2 platform.  Note GPIO mapping is currently as follows:
 
 Purpose       |  Component name     | GPIO Pin
 --------------|---------------------|----------------
