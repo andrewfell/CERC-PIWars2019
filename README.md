@@ -5,3 +5,7 @@ It is encouraged for all of the programmers to use the same common code base, so
 
 Some construction notes have been created here:
 https://docs.google.com/document/d/1KvgO0kNCsI4wakh8A-1rSRjfAQ3izC2MkFlMHK3TgQs/edit?usp=sharing
+
+We are now on Robot V2 chassis : files in Robot V2 directory:
+https://github.com/andrewfell/CERC-PIWars2019/tree/master/Robot%20V2
+
