@@ -6,6 +6,7 @@
 
 #first of all, import the DistanceSensor class from the 'gpiozero' library
 from gpiozero import DistanceSensor
+
 #then import the 'sleep' class from the 'time' library (so we can add pauses in our program)
 from time import sleep
 
@@ -17,14 +18,18 @@ right_sensor = DistanceSensor(echo=18, trigger=23)
 
 #begining looping forever
 while True:
+	
 	#take a reading from the left UDS
 	left_distance = left_sensor.distance * 100
+
 	#take a reading from the centre UDS
 	centre_distance = centre_sensor.distance * 100
+
 	#take a reading from the centre UDS
 	right_distance = right_sensor.distance * 100
 
-	#print the results on the screen
+	#print the results on the screen. Distance is in centimetres
 	print(left_distance, centre_distance, right_distance)
+
 	#wait a second between each scan
 	sleep(1)

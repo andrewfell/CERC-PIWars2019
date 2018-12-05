@@ -7,6 +7,7 @@
 
 #first of all, import the Robot class from the 'gpiozero' library
 from gpiozero import Robot
+
 #then import the 'sleep' class from the 'time' library (so we can add pauses in our program)
 from time import sleep
 
@@ -14,12 +15,30 @@ from time import sleep
 burt_the_robot = Robot(left=(8, 7), right=(21, 20)) # dont change this pin mapping, otherwise your robot will be different to the others!
 
 
-burt_the_robot.forward() #go forward indefinitely
-sleep(0.5) # sleep for 0.5seconds
-burt_the_robot.right()  #spin right indefinitely
-sleep(0.5) #sleep for 0.5seconds
-burt_the_robot.left() #spin left indefinitely
-sleep(0.5) #sleep for 0.5seconds
-burt_the_robot.backward() #go backwards indefinitely
-sleep(0.5) #sleep for 0.5seconds
-burt_the_robot.stop() #stop!
+
+#go forward indefinitely
+burt_the_robot.forward()
+
+#sleep for 0.5seconds
+sleep(0.5) 
+
+#spin right indefinitely
+burt_the_robot.right()  
+
+#sleep for 0.5seconds
+sleep(0.5) 
+
+#spin left indefinitely
+burt_the_robot.left() 
+
+#sleep for 0.5seconds
+sleep(0.5) 
+
+#go backwards indefinitely
+burt_the_robot.backward() 
+
+#sleep for 0.5seconds
+sleep(0.5) 
+
+#stop, Burt!
+burt_the_robot.stop() 
