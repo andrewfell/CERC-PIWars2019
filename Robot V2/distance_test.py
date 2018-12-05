@@ -4,8 +4,9 @@
 #the robot should read the UDS sensors in the following order:  Left > Centre > Right
 #then 
 
-
+#first of all, import the DistanceSensor class from the 'gpiozero' library
 from gpiozero import DistanceSensor
+#then import the 'sleep' class from the 'time' library (so we can add pauses in our program)
 from time import sleep
 
 #define the name and pin mapping of each UDS.  This pin mapping should match the mapping in 

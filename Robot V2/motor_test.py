@@ -7,7 +7,7 @@
 
 #first of all, import the Robot class from the 'gpiozero' library
 from gpiozero import Robot
-#then import the 'sleep' class from the 'time' library
+#then import the 'sleep' class from the 'time' library (so we can add pauses in our program)
 from time import sleep
 
 #define a robot (it's called Burt! :-) ), with the GPIO pin mapping as per the GPIO in the RobotV2.md file
