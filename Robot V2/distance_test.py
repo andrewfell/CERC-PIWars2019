@@ -24,7 +24,7 @@ while True:
 	#take a reading from the centre UDS
 	right_distance = right_sensor.distance * 100
 
-    #print the results on the screen
-    print(left_distance, centre_distance, right_distance)
-    #wait a second between each scan
-    sleep(1)
+	#print the results on the screen
+	print(left_distance, centre_distance, right_distance)
+	#wait a second between each scan
+	sleep(1)
