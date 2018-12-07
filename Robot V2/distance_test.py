@@ -14,7 +14,7 @@ from time import sleep
 #https://github.com/andrewfell/CERC-PIWars2019/blob/master/Robot%20V2/RobotV2.md
 left_sensor = DistanceSensor(echo=14, trigger=15)
 centre_sensor = DistanceSensor(echo=17, trigger=4)
-right_sensor = DistanceSensor(echo=18, trigger=23)
+right_sensor = DistanceSensor(echo=23, trigger=18)
 
 #begining looping forever
 while True:
