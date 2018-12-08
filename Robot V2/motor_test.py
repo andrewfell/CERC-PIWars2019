@@ -21,26 +21,26 @@ speed = 0.7
 #go forward indefinitely
 burt_the_robot.forward(speed)
 
-#sleep for 0.5seconds
-sleep(0.5) 
+#sleep for 2seconds
+sleep(2) 
 
 #spin right indefinitely
 burt_the_robot.right(speed)  
 
-#sleep for 0.5seconds
-sleep(0.5) 
+#sleep for 2seconds
+sleep(2) 
 
 #spin left indefinitely
 burt_the_robot.left(speed) 
 
-#sleep for 0.5seconds
-sleep(0.5) 
+#sleep for 2seconds
+sleep(2) 
 
 #go backwards indefinitely
 burt_the_robot.backward(speed) 
 
-#sleep for 0.5seconds
-sleep(0.5) 
+#sleep for 2seconds
+sleep(2) 
 
 #stop, Burt!
 burt_the_robot.stop() 
