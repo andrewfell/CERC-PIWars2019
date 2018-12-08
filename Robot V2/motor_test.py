@@ -14,28 +14,30 @@ from time import sleep
 #define a robot (it's called Burt! :-) ), with the GPIO pin mapping as per the GPIO in the RobotV2.md file
 burt_the_robot = Robot(left=(8, 7), right=(21, 20)) # dont change this pin mapping, otherwise your robot will be different to the others!
 
+#set the speed.  1 = 100%, 0.5 = 50% and so on...
+speed = 0.7
 
 
 #go forward indefinitely
-burt_the_robot.forward()
+burt_the_robot.forward(speed)
 
 #sleep for 0.5seconds
 sleep(0.5) 
 
 #spin right indefinitely
-burt_the_robot.right()  
+burt_the_robot.right(speed)  
 
 #sleep for 0.5seconds
 sleep(0.5) 
 
 #spin left indefinitely
-burt_the_robot.left() 
+burt_the_robot.left(speed) 
 
 #sleep for 0.5seconds
 sleep(0.5) 
 
 #go backwards indefinitely
-burt_the_robot.backward() 
+burt_the_robot.backward(speed) 
 
 #sleep for 0.5seconds
 sleep(0.5) 
