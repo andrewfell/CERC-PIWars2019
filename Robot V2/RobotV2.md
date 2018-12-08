@@ -16,11 +16,9 @@ Input 4       | Right motor         | 20
 The GPIOZERO library is most useful for what we need (https://gpiozero.readthedocs.io/en/stable/index.html).  
 Install this onto your RPI aacording to this page: https://gpiozero.readthedocs.io/en/stable/installing.html
 
+Here is the pinout for te RPi connector: https://www.raspberrypi.org/documentation/usage/gpio/
+
 Recommend starting with driving your robot's motors and reading the UDS sensors.  
 Use the example code I have provided, which contain comments to explain how it works:
 * motor_test.py
 * distance_test.py
-
-
-
-
