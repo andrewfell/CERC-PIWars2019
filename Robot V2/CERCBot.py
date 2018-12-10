@@ -2,8 +2,8 @@
 # CERCBot library by Rishthefish
 # Nice work, Rishan!
 
-# Firstly, the libraries that we require are imported.
-#  We only need InputDevice and OutputDevice as this library is for operating the UDS sensors.
+# The libraries that we require are imported at the beginning of the program
+# We only need InputDevice and OutputDevice as this library is for operating the UDS sensors.
 # https://gpiozero.readthedocs.io/en/stable/api_input.html#inputdevice
 # https://gpiozero.readthedocs.io/en/stable/api_output.html#outputdevice
 from gpiozero import InputDevice, OutputDevice
