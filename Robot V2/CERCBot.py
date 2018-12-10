@@ -3,7 +3,7 @@
 # Nice work, Rishan!
 
 # The libraries that we require are imported at the beginning of the program
-# We only need InputDevice and OutputDevice as this library is for operating the UDS sensors.
+# From gpiozero, we only need InputDevice and OutputDevice rather than the DistanceSensor module (which appears to output lots of errors!).
 # https://gpiozero.readthedocs.io/en/stable/api_input.html#inputdevice
 # https://gpiozero.readthedocs.io/en/stable/api_output.html#outputdevice
 from gpiozero import InputDevice, OutputDevice
