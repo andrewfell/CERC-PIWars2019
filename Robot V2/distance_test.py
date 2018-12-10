@@ -1,34 +1,31 @@
 #This program tests that you have the UDS GPIO mapping correct on your CERC Robot V2 chassis
 #refer to GPIO pins allocations here: https://www.raspberrypi.org/documentation/usage/gpio/
-#the 'DistanceSensor' class of the gpiozero library is used: https://gpiozero.readthedocs.io/en/stable/recipes.html#distance-sensor
-#the robot should read the UDS sensors in the following order:  Left > Centre > Right
-#then 
 
-#first of all, import the DistanceSensor class from the 'gpiozero' library
-from gpiozero import DistanceSensor
-
-#then import the 'sleep' class from the 'time' library (so we can add pauses in our program)
+# then import the 'sleep' class from the 'time' library (so we can add pauses in our program)
 from time import sleep
+
+# We'll use the distance sensor module in our CERCBot library (CERCBot.py)
+import CERCBot
 
 #define the name and pin mapping of each UDS.  This pin mapping should match the mapping in 
 #https://github.com/andrewfell/CERC-PIWars2019/blob/master/Robot%20V2/RobotV2.md
-left_sensor = DistanceSensor(echo=14, trigger=15)
-centre_sensor = DistanceSensor(echo=17, trigger=4)
-right_sensor = DistanceSensor(echo=23, trigger=18)
+left_echo_pin = 14
+left_trigger_pin = 15
+centre_echo_pin = 17
+centre_trigger_pin = 4
+right_echo_pin = 23
+right_trigger_pin = 18
 
-#begining looping forever
+
+#begin looping forever
 while True:
 	
-	#take a reading from the left UDS
-	left_distance = left_sensor.distance * 100
+	#take a reading from the left, centre and right Ultra Sound Distance Sensors
+	left_distance = CERCBot.calc_dist_cm(left_trigger_pin, left_echo_pin)
+	centre_distance = CERCBot.calc_dist_cm(centre_trigger_pin, centre_echo_pin)
+	right_distance = CERCBot.calc_dist_cm(right_trigger_pin, right_echo_pin)
 
-	#take a reading from the centre UDS
-	centre_distance = centre_sensor.distance * 100
-
-	#take a reading from the centre UDS
-	right_distance = right_sensor.distance * 100
-
-	#print the results on the screen. Distance is in centimetres
+	# Print out the measurements
 	print(left_distance, centre_distance, right_distance)
 
 	#wait a second between each scan
