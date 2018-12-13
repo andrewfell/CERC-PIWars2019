@@ -16,3 +16,5 @@ My GPIOs for my prototype robot is in gpios.md
 Ultrasonic Distance Sensor code
 
 All of this code is done on Raspberry Pi 3 and may not work on other Operating Systems.
+
+For the four-wheeled chassis, the battery supply should be (research to be done)
