@@ -27,8 +27,11 @@ from time import sleep, time
 ###########################################################
 
 
-# This function meausres the time between the ultrasound pulse being sent out and the echo signal that returns
+# This function measures the time between the ultrasound pulse being sent out and the echo signal that returns
+# Good job, but after some time the 3 distance sensors don't work because the programe gets stuck in the while loop. To stop that,
+# We need to use the break function.
 def get_pulse_time(trig_pin, echo_pin):
+    pulse_start = time()
     ###### Add your echo and trig pin as an argument 
     trig = OutputDevice(trig_pin)
     echo = InputDevice(echo_pin)
@@ -36,11 +39,22 @@ def get_pulse_time(trig_pin, echo_pin):
     sleep(0.00001)
     trig.off()
     pulse_start = time()
+    pulse = time()
+    brk = 0
     while echo.is_active == False:
             pulse_start = time()
-    pulse_end = time()        
+            full = pulse_start - pulse
+            if full > 0.0001:
+                brk = 1
+                break
+    pulse_end = time()
+    end = time()
     while echo.is_active == True:
             pulse_end = time()
+            total = pulse_end - end
+            if total > 0.0001:
+                brk = 1
+                break
     
     return pulse_end - pulse_start
 
