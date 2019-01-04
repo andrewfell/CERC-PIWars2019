@@ -36,3 +36,6 @@ robot.close()
 left_sensor.close()
 right_sensor.close()
 
+# I've noticed that the actual piwars challenge uses a white line on black background. This program would need inverting to suit.
+
+
