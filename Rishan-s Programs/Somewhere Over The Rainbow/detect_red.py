@@ -1,6 +1,6 @@
 # USAGE
 # python detect_color.py --image pokemon_games.png
-
+####### NOTE: THE RGB VALUES IN THIS PROGRAM MAY NOT BE THE EXACT VALUE AS THE ACTUAL EVENT. RESEARCH TO BE DONE TO FIND THE RGB VALUE.
 # import the necessary packages
 import numpy as np
 import argparse
