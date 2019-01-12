@@ -1,6 +1,6 @@
 # USAGE
 # python detect_color.py --image pokemon_games.png
-####### NOTE: THE RGB VALUES IN THIS PROGRAM MAY NOT BE THE EXACT VALUE AS THE ACTUAL EVENT. RESEARCH TO BE DONE TO FIND THE RGB VALUE.
+
 # import the necessary packages
 import numpy as np
 import argparse
@@ -30,34 +30,52 @@ upper = [50, 56, 200]
 # create NumPy arrays from the boundaries
 lower = np.array(lower, dtype = "uint8")
 upper = np.array(upper, dtype = "uint8")
+while True:
 # find the colors within the specified boundaries and apply
 # the mask
-camera.capture(image_dest,format='png')
+    camera.capture(image_dest,format='png')
 
 
 # load the image
 #image = cv2.imread(args["image"])
 #image = cv2.imread("/home/pi/My Projects/AI Python projects/opencv-python-color-detection/pokemon_games.png")
-image = cv2.imread(image_dest)
+    image = cv2.imread(image_dest)
 
 
-mask = cv2.inRange(image, lower, upper)
-output = cv2.bitwise_and(image, image, mask = mask)
+    mask = cv2.inRange(image, lower, upper)
+    output = cv2.bitwise_and(image, image, mask = mask)
 
-row,col,channel= output.shape
-print (" row  = ",row)
-print (" col  = ",col)
-red=0
-for i in range(row):
-    for j in range(col):
-        #print (output[i,j,2])
-        red = red + output[i,j,2]
-        
-print ("red = ",red)
-call(["rm", image_dest])
+    row,col,channel= output.shape
+    print (" row  = ",row)
+    print (" col  = ",col)
+    red=0
+    green=0
+    blue=0
+    for i in range(row):
+        for j in range(col):
+            #print (output[i,j,2])
+            red = red + output[i,j,2]
+            green = green + output[i,j,1]
+            blue = blue + output[i,j,0]
+            
+    print ("red = ",red)
+    print ("green = ",green)
+    print ("blue = ",blue)
+    ru = red/(red + green + blue + 1)
+    gu = green/(red + green + blue + 1)
+    bu = blue/(red + green + blue + 1)
 
-# show the images
-cv2.imshow("images", np.hstack([image, output]))
-cv2.waitKey(0)
+    print ("ru = ",ru)
+    print ("gu = ",gu)
+    print ("bu = ",bu)
+    if red < 1000 or green < 1000 or blue < 1000:
+        print('Turning left')
+    else:
+        print('Forward')
+    call(["rm", image_dest])
+
+    # show the images
+    cv2.imshow("images", np.hstack([image, output]))
+    cv2.waitKey(0)
 
 	##
