@@ -68,7 +68,7 @@ while True:
     print ("ru = ",ru)
     print ("gu = ",gu)
     print ("bu = ",bu)
-    if red < 1000 or green < 1000 or blue < 1000:
+    if red < 1000:
         print('Turning left')
     else:
         print('Forward')
