@@ -8,11 +8,25 @@ import cv2
 from picamera import PiCamera
 from time import sleep
 from subprocess import call
+from gpiozero import Robot
+# We'll use the distance sensor module in our CERCBot library (CERCBot.py)
+import CERCBot
 
 camera = PiCamera()
 camera.rotation = 180
+burt_the_robot = Robot(left=(8, 7), right=(21, 20))
+left_echo_pin = 14
+left_trigger_pin = 15
+centre_echo_pin = 17
+centre_trigger_pin = 4
+right_echo_pin = 23
+right_trigger_pin = 18
+speed = 0.7
 image_dest = "/home/pi/colour.png"
 camera.resolution = (200, 200)
+left_distance = CERCBot.calc_dist_cm(left_trigger_pin, left_echo_pin)
+centre_distance = CERCBot.calc_dist_cm(centre_trigger_pin, centre_echo_pin)
+right_distance = CERCBot.calc_dist_cm(right_trigger_pin, right_echo_pin)
 
 # construct the argument parse and parse the arguments
 ap = argparse.ArgumentParser()
@@ -68,14 +82,23 @@ while True:
     print ("ru = ",ru)
     print ("gu = ",gu)
     print ("bu = ",bu)
-    if red < 5000:
+    if red < 1000 or green < 1000 or blue < 1000:
         print('Turning left')
+        burt_the_robot.left(speed) 
     else:
         print('Forward')
+        burt_the_robot.backward(speed)
+    while r < dis and l < dis:
+        r = CERCBot.calc_dist_cm(trig_pin_r, echo_pin_r)
+        l = CERCBot.calc_dist_cm(trig_pin_l, echo_pin_l)
+        print(' l= ',l," m = ",m," r = ",r)
+        burt_the_robot.stop() 
+        print('Stop')
+    sleep(sl)
     call(["rm", image_dest])
 
     # show the images
-    cv2.imshow("images", np.hstack([image, output]))
-    cv2.waitKey(0)
+    #cv2.imshow("images", np.hstack([image, output]))
+    #cv2.waitKey(0)
 
 	##
