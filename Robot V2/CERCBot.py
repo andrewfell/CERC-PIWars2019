@@ -6,6 +6,7 @@
 # From gpiozero, we only need InputDevice and OutputDevice rather than the DistanceSensor module (which appears to output lots of errors!).
 # https://gpiozero.readthedocs.io/en/stable/api_input.html#inputdevice
 # https://gpiozero.readthedocs.io/en/stable/api_output.html#outputdevice
+# Should we make a OpenCV function in here? By Rishan
 from gpiozero import InputDevice, OutputDevice
 
 # The time library is used for the sleep command
