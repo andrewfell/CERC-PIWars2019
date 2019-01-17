@@ -1,6 +1,6 @@
 # USAGE
 # python detect_color.py --image pokemon_games.png
-
+# The robot must go in the following order: Red, Blue, Yellow and Green
 # import the necessary packages
 import numpy as np
 import argparse
@@ -24,6 +24,7 @@ right_trigger_pin = 18
 speed = 0.3
 dis = 15
 sl = 0.1
+colours = ['red','blue','green']
 image_dest = "/home/pi/colour.png"
 camera.resolution = (200, 200)
 left_distance = CERCBot.calc_dist_cm(left_trigger_pin, left_echo_pin)
@@ -46,66 +47,67 @@ upper = [50, 56, 200]
 # create NumPy arrays from the boundaries
 lower = np.array(lower, dtype = "uint8")
 upper = np.array(upper, dtype = "uint8")
-while True:
-# find the colors within the specified boundaries and apply
-# the mask
-    camera.capture(image_dest,format='png')
-    #print("Getting Right")
-    r = CERCBot.calc_dist_cm(right_trigger_pin, right_echo_pin)
-    #print("Getting Left")
-    l = CERCBot.calc_dist_cm(left_trigger_pin,left_echo_pin)
-    #print('Got left')
-    #print("Getting Middle")
-    m = CERCBot.calc_dist_cm(centre_trigger_pin, centre_echo_pin)
-# load the image
-#image = cv2.imread(args["image"])
-#image = cv2.imread("/home/pi/My Projects/AI Python projects/opencv-python-color-detection/pokemon_games.png")
-    image = cv2.imread(image_dest)
-    mask = cv2.inRange(image, lower, upper)
-    output = cv2.bitwise_and(image, image, mask = mask)
-    row,col,channel= output.shape
-    #print (" row  = ",row)
-    #print (" col  = ",col)
-    red=0
-    green=0
-    blue=0
-    for i in range(row):
-        for j in range(col):
-            #print (output[i,j,2])
-            red = red + output[i,j,2]
-            green = green + output[i,j,1]
-            blue = blue + output[i,j,0]
-            
-    print ("red = ",red)
-    print ("green = ",green)
-    print ("blue = ",blue)
-    print(' l= ',l," m = ",m," r = ",r)
-    #ru = red/(red + green + blue + 1)
-    #gu = green/(red + green + blue + 1)
-    #bu = blue/(red + green + blue + 1)
-    #print ("ru = ",ru)
-    #print ("gu = ",gu)
-    #print ("bu = ",bu)
-    if r < dis or l < dis or m < dis:
-        #r = CERCBot.calc_dist_cm(right_trigger_pin, right_echo_pin)
-        #l = CERCBot.calc_dist_cm(left_trigger_pin, left_echo_pin)
-        #m = CERCBot.calc_dist_cm(left_trigger_pin, left_echo_pin)
-        #print(' l= ',l," m = ",m," r = ",r)
-        burt_the_robot.stop()
-        print('Stopping')
-    else:
-        if red < 1000:
-            print('Turning left')
-            burt_the_robot.left(speed) 
+# In the specific order ('red','blue','yellow','green'), go to each zone
+#and stop when it is less than 15cm away. 
+for k in range(len(colours)):
+    colourDone = False
+    myColour = colours[k]
+    print('Finding colour',myColour)
+    while colourDone == False:
+    # find the colors within the specified boundaries and apply
+    # the mask
+        camera.capture(image_dest,format='png')
+        r = CERCBot.calc_dist_cm(right_trigger_pin, right_echo_pin)
+        l = CERCBot.calc_dist_cm(left_trigger_pin,left_echo_pin)
+        m = CERCBot.calc_dist_cm(centre_trigger_pin, centre_echo_pin)
+    # load the image
+        image = cv2.imread(image_dest)
+        mask = cv2.inRange(image, lower, upper)
+        output = cv2.bitwise_and(image, image, mask = mask)
+        row,col,channel= output.shape
+        #print (" row  = ",row)
+        #print (" col  = ",col)
+        red=0
+        green=0
+        blue=0
+        for i in range(row):
+            for j in range(col):
+                #print (output[i,j,2])
+                red = red + output[i,j,2]
+                green = green + output[i,j,1]
+                blue = blue + output[i,j,0]
+                
+        print ("red = ",red)
+        print ("green = ",green)
+        print ("blue = ",blue)
+        print(' l= ',l," m = ",m," r = ",r)
+        if myColour == 'red':
+            myVal = red
+        if myColour == 'blue':
+            myVal = blue
+        if myColour == 'green':
+            myVal = green
+        if myColour == 'yellow':
+            myVal = yellow
+        
+        if r < dis or l < dis or m < dis:
+            burt_the_robot.stop()
+            print('Stopping')
+            colourDone = True
         else:
-            print('Forward')
-            burt_the_robot.backward(speed)
+            if  myVal < 1000:
+                print('Turning left')
+                burt_the_robot.left(speed) 
+            else:
+                print('Forward')
+                burt_the_robot.backward(speed)
 
-    sleep(sl)
-    call(["rm", image_dest])
+        sleep(sl)
+        call(["rm", image_dest])
 
-    # show the images
-    #cv2.imshow("images", np.hstack([image, output]))
-    #cv2.waitKey(0)
+        # show the images
+        #cv2.imshow("images", np.hstack([image, output]))
+        #cv2.waitKey(0)
 
-	##
+            ##
+
