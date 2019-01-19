@@ -14,6 +14,7 @@ import CERCBot
 
 camera = PiCamera()
 camera.rotation = 180
+threshhold = 1000
 burt_the_robot = Robot(left=(8, 7), right=(21, 20))
 left_echo_pin = 14
 left_trigger_pin = 15
@@ -21,10 +22,11 @@ centre_echo_pin = 17
 centre_trigger_pin = 4
 right_echo_pin = 23
 right_trigger_pin = 18
+filecnt = 1
 speed = 0.3
-dis = 15
+dis = 7
 sl = 0.1
-colours = ['red','blue','green']
+colours = ['red']
 image_dest = "/home/pi/colour.png"
 camera.resolution = (200, 200)
 left_distance = CERCBot.calc_dist_cm(left_trigger_pin, left_echo_pin)
@@ -48,7 +50,8 @@ upper = [50, 56, 200]
 lower = np.array(lower, dtype = "uint8")
 upper = np.array(upper, dtype = "uint8")
 # In the specific order ('red','blue','yellow','green'), go to each zone
-#and stop when it is less than 15cm away. 
+#and stop when it is less than 15cm away.
+call(["rm", "/home/pi/*.png"])
 for k in range(len(colours)):
     colourDone = False
     myColour = colours[k]
@@ -65,14 +68,11 @@ for k in range(len(colours)):
         mask = cv2.inRange(image, lower, upper)
         output = cv2.bitwise_and(image, image, mask = mask)
         row,col,channel= output.shape
-        #print (" row  = ",row)
-        #print (" col  = ",col)
         red=0
         green=0
         blue=0
         for i in range(row):
             for j in range(col):
-                #print (output[i,j,2])
                 red = red + output[i,j,2]
                 green = green + output[i,j,1]
                 blue = blue + output[i,j,0]
@@ -89,13 +89,36 @@ for k in range(len(colours)):
             myVal = green
         if myColour == 'yellow':
             myVal = yellow
-        
-        if r < dis or l < dis or m < dis:
-            burt_the_robot.stop()
-            print('Stopping')
-            colourDone = True
+        if m < dis and r < dis:
+            burt_the_robot.forward(speed)
+            sleep(0.2)
+            burt_the_robot.left(speed)
+        if m < dis and l < dis:
+            burt_the_robot.forward(speed)
+            sleep(0.2)
+            burt_the_robot.right(speed)
+        if  m < dis:
+            if (myVal > threshhold):
+                colourDone = True
+                ## Glow an LED
+                print('Stopping')
+                burt_the_robot.stop()
+                sleep(0.2)
+            burt_the_robot.forward(speed)
+            sleep(0.2)
+        elif r < dis:
+            ## try adding curve here
+            burt_the_robot.forward(speed)
+            sleep (0.2)
+            burt_the_robot.left(speed)
+        elif l < dis:
+            ## try adding curve here
+            ## When I write burt_the_robot.forward(speed), it actually does burt_the_robot.backward(speed)
+            burt_the_robot.forward(speed)
+            sleep (0.2)
+            burt_the_robot.right(speed)
         else:
-            if  myVal < 1000:
+            if  myVal < threshhold:
                 print('Turning left')
                 burt_the_robot.left(speed) 
             else:
@@ -103,8 +126,10 @@ for k in range(len(colours)):
                 burt_the_robot.backward(speed)
 
         sleep(sl)
-        call(["rm", image_dest])
-
+        image_tg= "/home/pi/" + str(filecnt) + "-" + str(red) + "-"+ str(green) + "-" + str(blue)  + "-" + str(l) + "-"  + str(m) + "-" + str(r) + "-" + ".png"
+        filecnt = filecnt + 1 
+        call(["mv", image_dest, image_tg])
+        # Remove pictures afterwards.
         # show the images
         #cv2.imshow("images", np.hstack([image, output]))
         #cv2.waitKey(0)
