@@ -3,102 +3,54 @@
 
 # import the necessary packages
 import numpy as np
-import argparse
 import cv2
-from picamera import PiCamera
-from time import sleep
-from subprocess import call
-from gpiozero import Robot
-# We'll use the distance sensor module in our CERCBot library (CERCBot.py)
-import CERCBot
 
-camera = PiCamera()
-camera.rotation = 180
-burt_the_robot = Robot(left=(8, 7), right=(21, 20))
-left_echo_pin = 14
-left_trigger_pin = 15
-centre_echo_pin = 17
-centre_trigger_pin = 4
-right_echo_pin = 23
-right_trigger_pin = 18
-speed = 0.7
-image_dest = "/home/pi/colour.png"
-camera.resolution = (200, 200)
-left_distance = CERCBot.calc_dist_cm(left_trigger_pin, left_echo_pin)
-centre_distance = CERCBot.calc_dist_cm(centre_trigger_pin, centre_echo_pin)
-right_distance = CERCBot.calc_dist_cm(right_trigger_pin, right_echo_pin)
+image_dest = "/home/pi/color.png"
 
-# construct the argument parse and parse the arguments
-ap = argparse.ArgumentParser()
-ap.add_argument("-i", "--image", help = "path to the image")
-args = vars(ap.parse_args())
+## This is RGB filter
+lower_rgb = [17, 15, 100]
+upper_rgb = [50, 56, 200]
 
-# define the list of boundaries
-boundaries = [
-	([17, 15, 100], [50, 56, 200])
-]
+##This is HSV .. we need two Red filters
+lower_red1_hsv = [0, 10, 10]
+upper_red1_hsv = [40, 255, 255]
+lower_red2_hsv = [160, 10, 10]
+upper_red2_hsv = [180, 255, 255]
 
-# loop over the boundaries
-lower = [17, 15, 100]
-upper = [50, 56, 200]
-# create NumPy arrays from the boundaries
-lower = np.array(lower, dtype = "uint8")
-upper = np.array(upper, dtype = "uint8")
-while True:
-# find the colors within the specified boundaries and apply
-# the mask
-    camera.capture(image_dest,format='png')
+## convert into numpy array
+lower_rgb = np.array(lower_rgb, dtype = "uint8")
+upper_rgb = np.array(upper_rgb, dtype = "uint8")
+lower_red1_hsv = np.array(lower_red1_hsv, dtype = "uint8")
+upper_red1_hsv = np.array(upper_red1_hsv, dtype = "uint8")
+lower_red2_hsv = np.array(lower_red2_hsv, dtype = "uint8")
+upper_red2_hsv = np.array(upper_red2_hsv, dtype = "uint8")
 
+## Take the image
+image = cv2.imread(image_dest)
+## Convert into HSV
+image_hsv = cv2.cvtColor(image,cv2.COLOR_BGR2HSV)
 
-# load the image
-#image = cv2.imread(args["image"])
-#image = cv2.imread("/home/pi/My Projects/AI Python projects/opencv-python-color-detection/pokemon_games.png")
-    image = cv2.imread(image_dest)
+## Apply the two red filters
+mask_red1_hsv = cv2.inRange(image_hsv, lower_red1_hsv, upper_red1_hsv)
+mask_red1_hsv = np.array(mask_red1_hsv)
+mask_red2_hsv = cv2.inRange(image_hsv, lower_red2_hsv, upper_red2_hsv)
+mask_red2_hsv = np.array(mask_red2_hsv)
 
+## Also calculate in RGB
+mask_rgb = cv2.inRange(image, lower_rgb, upper_rgb)
+mask_rgb = np.array(mask_rgb)
 
-    mask = cv2.inRange(image, lower, upper)
-    output = cv2.bitwise_and(image, image, mask = mask)
+## Total red pixels detected
+red_pixel_hsv = (mask_red1_hsv==255).sum()+(mask_red2_hsv==255).sum()
+print ("Number of red pixels using RGB = ", (mask_rgb==255).sum())
+print ("Number of red pixels using HSV = ", red_pixel_hsv)
 
-    row,col,channel= output.shape
-    print (" row  = ",row)
-    print (" col  = ",col)
-    red=0
-    green=0
-    blue=0
-    for i in range(row):
-        for j in range(col):
-            #print (output[i,j,2])
-            red = red + output[i,j,2]
-            green = green + output[i,j,1]
-            blue = blue + output[i,j,0]
-            
-    print ("red = ",red)
-    print ("green = ",green)
-    print ("blue = ",blue)
-    ru = red/(red + green + blue + 1)
-    gu = green/(red + green + blue + 1)
-    bu = blue/(red + green + blue + 1)
-
-    print ("ru = ",ru)
-    print ("gu = ",gu)
-    print ("bu = ",bu)
-    if red < 1000 or green < 1000 or blue < 1000:
-        print('Turning left')
-        burt_the_robot.left(speed) 
-    else:
-        print('Forward')
-        burt_the_robot.backward(speed)
-    while r < dis and l < dis:
-        r = CERCBot.calc_dist_cm(trig_pin_r, echo_pin_r)
-        l = CERCBot.calc_dist_cm(trig_pin_l, echo_pin_l)
-        print(' l= ',l," m = ",m," r = ",r)
-        burt_the_robot.stop() 
-        print('Stop')
-    sleep(sl)
-    call(["rm", image_dest])
-
-    # show the images
-    #cv2.imshow("images", np.hstack([image, output]))
-    #cv2.waitKey(0)
-
-	##
+##row,col,channel= image_hsv.shape
+##print (" row  = ",row)
+##print (" col  = ",col)
+##for i in range(row):
+   ##for j in range(col):
+        ##print("PIXEL = ",image_hsv[i,j])
+##
+cv2.imshow("images", np.hstack([image_hsv, image_hsv]))
+cv2.waitKey(0)

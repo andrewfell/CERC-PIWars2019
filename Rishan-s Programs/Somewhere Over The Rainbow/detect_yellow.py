@@ -6,28 +6,27 @@ import numpy as np
 import cv2
 
 image_dest = "/home/pi/color.png"
-
-##This is HSV .. we need two green filters
-lower_green_hsv = [40, 10, 10]
-upper_green_hsv = [80, 255, 255]
+ 
+##This is HSV .. we need two yellow filters
+lower_yellow_hsv = [27, 10, 10]
+upper_yellow_hsv = [32, 255, 255]
 
 ## convert into numpy array
-lower_green_hsv = np.array(lower_green_hsv, dtype = "uint8")
-upper_green_hsv = np.array(upper_green_hsv, dtype = "uint8")
+lower_yellow_hsv = np.array(lower_yellow_hsv, dtype = "uint8")
+upper_yellow_hsv = np.array(upper_yellow_hsv, dtype = "uint8")
 
 ## Take the image
 image = cv2.imread(image_dest)
 ## Convert into HSV
 image_hsv = cv2.cvtColor(image,cv2.COLOR_BGR2HSV)
 
-## Apply the two green filters
-mask_green_hsv = cv2.inRange(image_hsv, lower_green_hsv, upper_green_hsv)
-mask_green_hsv = np.array(mask_green_hsv)
+## Apply the two yellow filters
+mask_yellow_hsv = cv2.inRange(image_hsv, lower_yellow_hsv, upper_yellow_hsv)
+mask_yellow_hsv = np.array(mask_yellow_hsv)
 
-## Total green pixels detected
-green_pixel_hsv = (mask_green_hsv==255).sum()
-
-print ("Number of green pixels using HSV = ", green_pixel_hsv)
+## Total yellow pixels detected
+yellow_pixel_hsv = (mask_yellow_hsv==255).sum()
+print ("Number of yellow pixels using HSV = ", yellow_pixel_hsv)
 
 ##row,col,channel= image_hsv.shape
 ##print (" row  = ",row)
