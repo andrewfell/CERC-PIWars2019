@@ -80,6 +80,7 @@ for k in range(len(colours)):
     # load the img
         img = cv2.imread(img_dest)
         img = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
+        img = cv2.GaussianBlur(img,(11,11),100) # The last value changes the amount of blur, in our case the highest
         
         if myColour == 'red':
             mask1 = cv2.inRange(img, lower_red1, upper_red1)
@@ -159,7 +160,7 @@ for k in range(len(colours)):
         sleep(sl)
         # Remove pictures afterwards.
         # show the imgs
-        cv2.imshow("imgs", np.hstack([img, output]))
+        cv2.imshow("img", np.hstack([img, output]))
         cv2.waitKey(0)
 
             ##
