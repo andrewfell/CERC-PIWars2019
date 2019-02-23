@@ -54,9 +54,8 @@ print("centre")
 centre_distance = CERCBot.calc_dist_cm(centre_trigger_pin, centre_echo_pin)
 print("right")
 right_distance = CERCBot.calc_dist_cm(right_trigger_pin, right_echo_pin)
-#print("left")
-#left_distance = CERCBot.calc_dist_cm(left_trigger_pin, left_echo_pin)
-
+print("left")
+left_distance = CERCBot.calc_dist_cm(left_trigger_pin, left_echo_pin)
 #Red:
 lower_red1 = [0, 10, 10]
 upper_red1 = [40, 255, 255]
@@ -71,7 +70,6 @@ upper_green = [80, 255, 255]
 #Yellow:
 lower_yellow = [27, 10, 10]
 upper_yellow = [32, 255, 255]
-
 # create NumPy arrays from the boundaries
 lower_red1 = np.array(lower_red1, dtype = "uint8")
 upper_red1 = np.array(upper_red1, dtype = "uint8")
@@ -130,8 +128,8 @@ for k in range(len(colours)):
         
         #print ("pix_cnt = ",pix_cnt, " red = ",red, "green = ",green,"blue = ",blue)
         r = CERCBot.calc_dist_cm(right_trigger_pin, right_echo_pin)
-        #l = CERCBot.calc_dist_cm(left_trigger_pin,left_echo_pin)
-        l=20
+        l = CERCBot.calc_dist_cm(left_trigger_pin,left_echo_pin)
+        #l=20
         m = CERCBot.calc_dist_cm(centre_trigger_pin, centre_echo_pin)
         print(' l= ',l," m = ",m," r = ",r)
         if m < dis and r < dis and (pix_cnt <= threshhold):
