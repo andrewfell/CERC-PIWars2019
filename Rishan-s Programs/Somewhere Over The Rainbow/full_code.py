@@ -1,23 +1,3 @@
-Skip to content
- 
-Search or jump to…
-
-Pull requests
-Issues
-Marketplace
-Explore
- @Rishan123
-Sign out
-2
-2 1 andrewfell/CERC-PIWars2019
- Code  Issues 3  Pull requests 0  Projects 0  Wiki  Insights
-CERC-PIWars2019/Rishan-s Programs/Somewhere Over The Rainbow/detect_ALL_NEXT2.py
-44ddcbd  18 days ago
-@Rishan123 Rishan123 Add files via upload
-    
-168 lines (155 sloc)  5.12 KB
-# USAGE
-# python detect_color.py --img pokemon_games.png
 # The robot must go in the following order: Red, Blue, Yellow and Green
 # import the necessary packages
 import numpy as np
