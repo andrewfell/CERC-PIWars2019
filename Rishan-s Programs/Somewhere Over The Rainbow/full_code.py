@@ -12,7 +12,7 @@ import CERCBot
 
 camera = PiCamera()
 camera.rotation = 180
-threshhold = 300 #pixels
+threshhold = 1000 #pixels
 burt_the_robot = Robot(left=(20, 21), right=(7, 8))
 left_echo_pin = 14
 left_trigger_pin = 15
@@ -28,7 +28,7 @@ sl = 0.3
 sl2 = 0.2
 
 colours = ['red','green']
-img_dest = "/home/pi/Pictures/colour.png"
+img_dest = "/home/pi/colour.png"
 camera.resolution = (200, 200)
 print("centre")
 centre_distance = CERCBot.calc_dist_cm(centre_trigger_pin, centre_echo_pin)
@@ -83,9 +83,9 @@ for k in range(len(colours)):
         img = cv2.GaussianBlur(img,(11,11),100) # The last value changes the amount of blur, in our case the highest
         
         if myColour == 'red':
-            mask1 = cv2.inRange(img, lower_red1, upper_red1)
+            mask = cv2.inRange(img, lower_red1, upper_red1)
             mask2 = cv2.inRange(img, lower_red2, upper_red2)
-            pix_cnt = (mask1==255).sum() + (mask2==255).sum()
+            pix_cnt = (mask==255).sum() + (mask2==255).sum()
         elif myColour == 'blue':
              mask = cv2.inRange(img, lower_blue, upper_blue)
              pix_cnt = (mask==255).sum()
@@ -95,17 +95,11 @@ for k in range(len(colours)):
         else:
             mask = cv2.inRange(img, lower_yellow, upper_yellow)
             pix_cnt = (mask==255).sum()
+
         output = cv2.bitwise_and(img, img, mask = mask)
-        
         row,col= mask.shape
-        #millis = int(round(time.time() * 1000))
-        #print ("millis ",millis)
         print("row = ",row," col = ",col)
-        
-        pix0_cnt = (mask==0).sum()
         print ("pix_cnt ",pix_cnt)
-        print ("pix_cnt 0 ",pix0_cnt)
-        print ("sum ",pix0_cnt+pix_cnt)
         
         #print ("pix_cnt = ",pix_cnt, " red = ",red, "green = ",green,"blue = ",blue)
         r = CERCBot.calc_dist_cm(right_trigger_pin, right_echo_pin)
@@ -113,55 +107,71 @@ for k in range(len(colours)):
         #l=20
         m = CERCBot.calc_dist_cm(centre_trigger_pin, centre_echo_pin)
         print(' l= ',l," m = ",m," r = ",r)
-        if m < dis and r < dis and (pix_cnt <= threshhold):
-            print('Turning back 1')
-            burt_the_robot.backward(speed)
-            print('Wait 1')
-            sleep(sl2)
-            print('Turning left 1')
-            burt_the_robot.left(speed)
-        if m < dis and l < dis  and (pix_cnt <= threshhold):
-            
-            print('Turning back 2')
-            burt_the_robot.backward(speed)
-            print('Wait 3')
-            sleep(sl2)
-            print('Turning right 1')
-            burt_the_robot.right(speed)
-        if  m < dis :
-            if (pix_cnt > threshhold):
-                colourDone = True
-                led.on()
-            print('Going back 3')
-            burt_the_robot.backward(speed)
-        elif r < dis:
-            ## try adding curve here
-            print('Turning back 4')
-            burt_the_robot.backward(speed)
-            sleep (sl2)
-            print('Turning left 2')
-            burt_the_robot.left(speed)
-        elif l < dis:
-            ## try adding curve here
-            print('Turning back 5')
-            burt_the_robot.backward(speed)
-            sleep (sl2)
-            print('Turning right 3')
-            burt_the_robot.right(speed)
-        else: 
-            if  pix_cnt < threshhold:
-                print('Turning left 3')
-                burt_the_robot.left(speed) 
-            else:
-                print('Forward')
-                burt_the_robot.forward(speed)
-                #sleep(sl2)
-        #print('Wait 8')
+
+        ## If colour is greater than threshold (i.e. it is looking at it clearly
+        ## and any of the distabnce is too less, i.e. it is either in the corner
+        ## or head on to the colour that means it is done for that colour
+        if (pix_cnt > threshhold):
+          if (m < dis or l < dis or r < dis):
+              colourDone = True
+              led.on()
+              burt_the_robot.backward(speed)
+          else:
+              
+            burt_the_robot.forward(speed)
+        else:
+        ## Turn left
+          burt_the_robot.left(speed)
+##           # If pic_cnt 
+##           if r < dis and (pix_cnt <= threshhold):
+##            print('Turning back 1')
+##            burt_the_robot.backward(speed)
+##            print('Wait 1')
+##            sleep(sl2)
+##            print('Turning left 1')
+##            burt_the_robot.left(speed)
+##        if m < dis and l < dis  and (pix_cnt <= threshhold):
+##            
+##            print('Turning back 2')
+##            burt_the_robot.backward(speed)
+##            print('Wait 3')
+##            sleep(sl2)
+##            print('Turning right 1')
+##            burt_the_robot.right(speed)
+##        if  m < dis :
+##            if (pix_cnt > threshhold):
+##                colourDone = True
+##                led.on()
+##            print('Going back 3')
+##            burt_the_robot.backward(speed)
+##        elif r < dis:
+##            ## try adding curve here
+##            print('Turning back 4')
+##            burt_the_robot.backward(speed)
+##            sleep (sl2)
+##            print('Turning left 2')
+##            burt_the_robot.left(speed)
+##        elif l < dis:
+##            ## try adding curve here
+##            print('Turning back 5')
+##            burt_the_robot.backward(speed)
+##            sleep (sl2)
+##            print('Turning right 3')
+##            burt_the_robot.right(speed)
+##        else: 
+##            if  pix_cnt < threshhold:
+##                print('Turning left 3')
+##                burt_the_robot.left(speed) 
+##            else:
+##                print('Forward')
+##                burt_the_robot.forward(speed)
+##                #sleep(sl2)
+##        #print('Wait 8')
         sleep(sl)
         # Remove pictures afterwards.
         # show the imgs
-        cv2.imshow("img", np.hstack([img, output]))
-        cv2.waitKey(0)
+        #cv2.imshow("img", np.hstack([img, output]))
+        #cv2.waitKey(0)
 
             ##
 burt_the_robot.stop()
