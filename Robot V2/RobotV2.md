@@ -22,7 +22,7 @@ Sensor OUT    | Mid-Right Line Sensor | 27
 Sensor OUT    | Mid-Left Line Sensor  | 22
 Input 1       | Nerf gun motor        | 13 
 Input 2       | Nerf gun motor        | 19 
-Input 4       | Gun Laser sight       | xx (will update)
+Input 3       | Gun Laser sight       | xx (will update)
 Input 4       | Gun Laser signt       | xx (will update)
 PWM           | Gun Fire servo        | 26
 
