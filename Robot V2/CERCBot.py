@@ -54,9 +54,6 @@ def calc_dist_cm(trig_pin, echo_pin):
     #print(dis_cm, 'cm')  << Have removed this as the distance is reported in the main program
     return dis_cm
 
-while True:
-    print ("Distance = ", calc_dist_cm_v2(GPIO_TRIGGER, GPIO_ECHO))
-    time.sleep(4)
 
       
         
