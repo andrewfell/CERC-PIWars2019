@@ -8,10 +8,10 @@ Trigger pin   | Front Middle UDS      | 4
 Echo pin      | Front Middle UDS      | 17
 Trigger pin   | Front Right UDS       | 18
 Echo pin      | Front Right UDS       | 23
-Trigger pin   | Side Left UDS         | xx 
-Echo pin      | Side Left UDS         | xx
-Trigger pin   | Side Right UDS        | xx
-Echo pin      | Side Right UDS        | xx
+Trigger pin   | Side Left UDS         | xx (any preference?)
+Echo pin      | Side Left UDS         | xx (any preference?)
+Trigger pin   | Side Right UDS        | xx (any preference?)
+Echo pin      | Side Right UDS        | xx (any preference?)
 Input 1       | Left motor            | 8
 Input 2       | Left motor            | 7
 Input 3       | Right motor           | 21
