@@ -3,8 +3,6 @@
 import time
 import RPi.GPIO as GPIO
 import CERCBot
-import cv2
-import numpy as np #<< OpenCV libraries
 
 def calculate_distance(duration):
     speed = 343
