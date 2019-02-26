@@ -42,7 +42,38 @@ def get_pulse_time(trig_pin, echo_pin):
             pulse_end = time()
     
     return pulse_end - pulse_start
+# This is another implementation of get_pulse_time() which makes use of the RPi.GPIO library
+# This is needed because Rishan's robot faced problems with get_pulse_time. The problem is explained in detail 
+# in issue #4
 
+def get_pulse_time_v2(trig_pin, echo_pin):
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setwarnings(False)
+
+    GPIO.setup(trig_pin, GPIO.OUT)
+    GPIO.setup(echo_pin, GPIO.IN)
+    cnt1 = 0
+    cnt2 = 0
+
+    GPIO.output(trig_pin, True)
+    sleep(0.00001)
+    GPIO.output(trig_pin, False)
+
+    start = time.time()
+    while GPIO.input(echo_pin) == 0:
+        start = time.time()
+        cnt1 += 1
+        if cnt1 > 1000:
+            break
+
+    stop = time.time()
+    while GPIO.input(echo_pin) == 1:
+        stop = time.time()
+        cnt2 += 1
+        if cnt2 > 1000:
+            break
+
+    return (stop - start)
 
 # The distance is calculated by dividing the speed of sound by the time is took for the pulse to return
 # Divide by 2 because we only want the distance from the robot to the wall, not the total distance from the robot
@@ -63,6 +94,20 @@ def calc_dist_cm(trig_pin, echo_pin):
     # Otherwise the measurement is noisy and it can make the robot make incorrect decisions on which way to turn.
     if dis_cm > 70:
         dis_cm = 70
+    #print(dis_cm, 'cm')  << Have removed this as the distance is reported in the main program
+    return dis_cm
+
+# The following function makes use of get_pulse_time_v2()
+
+def calc_dist_cm_v2(trig_pin, echo_pin):
+    duration = get_pulse_time_v2(trig_pin, echo_pin)
+    distance = calculate_distance(duration)
+    distance_cm = distance*100
+    dis_cm = int(distance_cm)
+    # If the measured distance is greater than 150cm, then set the distance to 150cm.  
+    # Otherwise the measurement is noisy and it can make the robot make incorrect decisions on which way to turn.
+    if dis_cm > 150:
+        dis_cm = 150
     #print(dis_cm, 'cm')  << Have removed this as the distance is reported in the main program
     return dis_cm
 
