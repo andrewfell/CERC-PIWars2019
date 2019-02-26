@@ -6,6 +6,7 @@
 # https://gpiozero.readthedocs.io/en/stable/api_input.html#inputdevice
 # https://gpiozero.readthedocs.io/en/stable/api_output.html#outputdevice
 from gpiozero import InputDevice, OutputDevice
+import RPi.GPIO as GPIO
 
 # The time library is used for the sleep command
 from time import sleep, time
