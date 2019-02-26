@@ -1,3 +1,4 @@
+
 # CERCBot library by Rishthefish
 # Nice work, Rishan!
 
@@ -60,16 +61,16 @@ def get_pulse_time_v2(trig_pin, echo_pin):
     sleep(0.00001)
     GPIO.output(trig_pin, False)
 
-    start = time.time()
+    start = time()
     while GPIO.input(echo_pin) == 0:
-        start = time.time()
+        start = time()
         cnt1 += 1
         if cnt1 > 1000:
             break
 
-    stop = time.time()
+    stop = time()
     while GPIO.input(echo_pin) == 1:
-        stop = time.time()
+        stop = time()
         cnt2 += 1
         if cnt2 > 1000:
             break
