@@ -31,11 +31,11 @@ colours = ['red','green']
 img_dest = "/home/pi/colour.png"
 camera.resolution = (200, 200)
 print("centre")
-centre_distance = CERCBot.calc_dist_cm(centre_trigger_pin, centre_echo_pin)
+centre_distance = CERCBot.calc_dist_cm_v2(centre_trigger_pin, centre_echo_pin)
 print("right")
-right_distance = CERCBot.calc_dist_cm(right_trigger_pin, right_echo_pin)
+right_distance = CERCBot.calc_dist_cm_v2(right_trigger_pin, right_echo_pin)
 print("left")
-left_distance = CERCBot.calc_dist_cm(left_trigger_pin, left_echo_pin)
+left_distance = CERCBot.calc_dist_cm_v2(left_trigger_pin, left_echo_pin)
 #Red:
 lower_red1 = [0, 10, 10]
 upper_red1 = [40, 255, 255]
@@ -102,10 +102,10 @@ for k in range(len(colours)):
         print ("pix_cnt ",pix_cnt)
         
         #print ("pix_cnt = ",pix_cnt, " red = ",red, "green = ",green,"blue = ",blue)
-        r = CERCBot.calc_dist_cm(right_trigger_pin, right_echo_pin)
-        l = CERCBot.calc_dist_cm(left_trigger_pin,left_echo_pin)
+        r = CERCBot.calc_dist_cm_v2(right_trigger_pin, right_echo_pin)
+        l = CERCBot.calc_dist_cm_v2(left_trigger_pin,left_echo_pin)
         #l=20
-        m = CERCBot.calc_dist_cm(centre_trigger_pin, centre_echo_pin)
+        m = CERCBot.calc_dist_cm_v2(centre_trigger_pin, centre_echo_pin)
         print(' l= ',l," m = ",m," r = ",r)
 
         ## If colour is greater than threshold (i.e. it is looking at it clearly
