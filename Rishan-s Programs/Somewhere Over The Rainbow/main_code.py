@@ -12,7 +12,7 @@ import CERCBot
 
 camera = PiCamera()
 camera.rotation = 180
-threshhold = 1000 #pixels
+threshhold = 100 #pixels
 burt_the_robot = Robot(left=(20, 21), right=(7, 8))
 left_echo_pin = 14
 left_trigger_pin = 15
@@ -21,11 +21,12 @@ centre_trigger_pin = 4
 right_echo_pin = 23
 right_trigger_pin = 18
 led = LED(2)
+filecnt = 1
 speed = 0.4
-dis = 8
+dis = 10
 sl = 0.3
 
-colours = ['red','green']
+colours = ['green']
 img_dest = "/home/pi/colour.png"
 camera.resolution = (200, 200)
 print("centre")
@@ -35,16 +36,16 @@ right_distance = CERCBot.calc_dist_cm_v2(right_trigger_pin, right_echo_pin)
 print("left")
 left_distance = CERCBot.calc_dist_cm_v2(left_trigger_pin, left_echo_pin)
 #Red:
-lower_red1 = [0, 10, 10]
-upper_red1 = [40, 255, 255]
-lower_red2 = [160, 10, 10]
-upper_red2 = [180, 255, 255]
+lower_red1 = [320, 60, 70]
+upper_red1 = [360, 75, 100]
+lower_red2 = [320, 60, 70]
+upper_red2 = [360, 75, 100]
 #Blue:
 lower_blue = [95, 10, 10]
 upper_blue = [135, 255, 255]
 #Green:
-lower_green = [40, 10, 10]
-upper_green = [80, 255, 255]
+lower_green = [55, 75, 60]
+upper_green = [65, 90, 85]
 #Yellow:
 lower_yellow = [27, 10, 10]
 upper_yellow = [32, 255, 255]
@@ -62,6 +63,7 @@ upper_yellow = np.array(upper_yellow, dtype = "uint8")
 # In the specific order ('red','blue','yellow','green'), go to each zone
 #and stop when it is less than 15cm away.
 led.off()
+direction = "left"
 print("starting")
 for k in range(len(colours)):
     colourDone = False
@@ -98,10 +100,10 @@ for k in range(len(colours)):
         row,col= mask.shape
         print("row = ",row," col = ",col)
         print ("pix_cnt ",pix_cnt)
-
+        
+        #print ("pix_cnt = ",pix_cnt, " red = ",red, "green = ",green,"blue = ",blue)
         r = CERCBot.calc_dist_cm_v2(right_trigger_pin, right_echo_pin)
         l = CERCBot.calc_dist_cm_v2(left_trigger_pin,left_echo_pin)
-        #l=20
         m = CERCBot.calc_dist_cm_v2(centre_trigger_pin, centre_echo_pin)
         print(' l= ',l," m = ",m," r = ",r)
 
@@ -114,11 +116,25 @@ for k in range(len(colours)):
               led.on()
               burt_the_robot.backward(speed)
           else:
-              
             burt_the_robot.forward(speed)
         else:
         ## Turn left
-          burt_the_robot.left(speed)
+            if l < dis and direction == "left":
+                direction = "right"    
+            if r < dis and direction == "right":
+                direction = "left"
+            if m < dis and direction == "forward":
+                direction = "backward"
+
+            print("Changing direction to ",direction)
+            if direction == "left":
+                burt_the_robot.left(speed)
+            elif direction == "right":
+                burt_the_robot.right(speed)
+            elif direction == "forward":
+                burt_the_robot.forward(speed)
+            else:
+                burt_the_robot.backward(speed)
 
         sleep(sl)
         # Remove pictures afterwards.
