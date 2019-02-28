@@ -12,7 +12,7 @@ import CERCBot
 
 camera = PiCamera()
 camera.rotation = 180
-threshhold = 100 #pixels
+threshhold = 50 #pixels
 burt_the_robot = Robot(left=(20, 21), right=(7, 8))
 left_echo_pin = 14
 left_trigger_pin = 15
@@ -23,12 +23,12 @@ right_trigger_pin = 18
 led = LED(2)
 filecnt = 1
 speed = 0.4
-dis = 10
-sl = 0.3
+dis = 12
+sl = 0.4
 
-colours = ['green']
+colours = ['red']
 img_dest = "/home/pi/colour.png"
-camera.resolution = (200, 200)
+camera.resolution = (400, 400)
 print("centre")
 centre_distance = CERCBot.calc_dist_cm_v2(centre_trigger_pin, centre_echo_pin)
 print("right")
@@ -41,11 +41,11 @@ upper_red1 = [360, 75, 100]
 lower_red2 = [320, 60, 70]
 upper_red2 = [360, 75, 100]
 #Blue:
-lower_blue = [95, 10, 10]
-upper_blue = [135, 255, 255]
+lower_blue = [160, 10, 30]
+upper_blue = [190, 20, 50]
 #Green:
-lower_green = [55, 75, 60]
-upper_green = [65, 90, 85]
+lower_green = [60, 70, 40]
+upper_green = [90, 90, 60]
 #Yellow:
 lower_yellow = [27, 10, 10]
 upper_yellow = [32, 255, 255]
@@ -70,7 +70,9 @@ for k in range(len(colours)):
     myColour = colours[k]
     led.off()
     print('Finding colour',myColour)
+    filecnt = 1
     while colourDone == False:
+        
         burt_the_robot.stop()
     # find the colors within the specified boundaries and apply
     # the mask
@@ -111,7 +113,7 @@ for k in range(len(colours)):
         ## and any of the distabnce is too less, i.e. it is either in the corner
         ## or head on to the colour that means it is done for that colour
         if (pix_cnt > threshhold):
-          if (m < dis or l < dis or r < dis):
+          if (m <= dis):
               colourDone = True
               led.on()
               burt_the_robot.backward(speed)
@@ -137,7 +139,10 @@ for k in range(len(colours)):
                 burt_the_robot.backward(speed)
 
         sleep(sl)
-        # Remove pictures afterwards.
+        image_tg= "/home/pi/Pictures/" + str(filecnt) + "-" +  str(pix_cnt)  + "-" + str(l) + "-"  + str(m) + "-" + str(r) + "-" + ".png"
+        filecnt = filecnt + 1 
+        call(["cp", img_dest, image_tg])
+          # Remove pictures afterwards.
         # show the imgs
         #cv2.imshow("img", np.hstack([img, output]))
         #cv2.waitKey(0)
