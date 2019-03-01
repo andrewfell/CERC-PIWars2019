@@ -72,7 +72,8 @@ for k in range(len(colours)):
     print('Finding colour',myColour)
     filecnt = 1
     while colourDone == False:
-        
+        sleep_val = sl
+        speed_val = speed
         burt_the_robot.stop()
     # find the colors within the specified boundaries and apply
     # the mask
@@ -81,7 +82,7 @@ for k in range(len(colours)):
     # Depending on colour, we need different masks
     # load the img
         img = cv2.imread(img_dest)
-        #img = img[100:400, 0:400]
+        img = img[200:400, 0:400]
         img = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
         img = cv2.GaussianBlur(img,(11,11),100) # The last value changes the amount of blur, in our case the highest
         
@@ -117,10 +118,12 @@ for k in range(len(colours)):
           if (m <= dis_m):
               colourDone = True
               led.on()
-              burt_the_robot.backward(speed)
+              burt_the_robot.backward(speed_val)
           else:
             print("Going forward")
-            burt_the_robot.forward(speed)
+            burt_the_robot.forward(speed_val)
+            if (m < 2*dis):
+                speed_val = sl/2
         else:
         ## Turn left
             if l < dis and direction == "left":
@@ -132,15 +135,15 @@ for k in range(len(colours)):
 
             print("Changing direction to ",direction)
             if direction == "left":
-                burt_the_robot.left(speed)
+                burt_the_robot.left(speed_val)
             elif direction == "right":
-                burt_the_robot.right(speed)
+                burt_the_robot.right(speed_val)
             elif direction == "forward":
-                burt_the_robot.forward(speed)
+                burt_the_robot.forward(speed_val)
             else:
-                burt_the_robot.backward(speed)
+                burt_the_robot.backward(speed_val)
 
-        sleep(sl)
+        sleep(sleep_val)
         image_tg= "/home/pi/Pictures/" + str(filecnt) + "-" +  str(pix_cnt)  + "-" + str(l) + "-"  + str(m) + "-" + str(r) + "-" + ".png"
         filecnt = filecnt + 1 
         call(["cp", img_dest, image_tg])
