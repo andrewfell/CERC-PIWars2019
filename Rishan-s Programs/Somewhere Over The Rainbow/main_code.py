@@ -35,20 +35,21 @@ print("right")
 right_distance = CERCBot.calc_dist_cm_v2(right_trigger_pin, right_echo_pin)
 print("left")
 left_distance = CERCBot.calc_dist_cm_v2(left_trigger_pin, left_echo_pin)
+#GIMP to OpenCV format of HSV
 #Red:
-lower_red1 = [320, 60, 70]
-upper_red1 = [360, 75, 100]
-lower_red2 = [320, 60, 70]
-upper_red2 = [360, 75, 100]
+lower_red1 = [320/2, (60/100)*255, (70/100)*255]
+upper_red1 = [360/2, (75/100)*255, (100/100)*255]
+lower_red2 = [320/2, (60/100)*255, (70/100)*255]
+upper_red2 = [360/2, (75/100)*255, (100/100)*255]
 #Blue:
-lower_blue = [160, 10, 30]
-upper_blue = [190, 20, 50]
+lower_blue = [160/2, (10/100)*255, (30/100)*255]
+upper_blue = [190/2, (20/100)*255, (50/100)*255]
 #Green:
-lower_green = [60, 70, 40]
-upper_green = [90, 90, 60]
+lower_green = [60/2, (70/100)*255, (40/100)*255]
+upper_green = [90/2, (90/100)*255, (60/100)*255]
 #Yellow:
-lower_yellow = [27, 10, 10]
-upper_yellow = [32, 255, 255]
+lower_yellow = [27/2, (10/100)*255, (10/100)*255]
+upper_yellow = [32/2, (255/100)*255, (255/100)*255]
 # create NumPy arrays from the boundaries
 lower_red1 = np.array(lower_red1, dtype = "uint8")
 upper_red1 = np.array(upper_red1, dtype = "uint8")
