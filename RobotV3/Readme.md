@@ -33,6 +33,7 @@ Install this onto your RPI aacording to this page: https://gpiozero.readthedocs.
 Here is the pinout for the RPi connector: https://www.raspberrypi.org/documentation/usage/gpio/
 
 Test code below:
+* CERCBot.py main (library as per latest modification in RobotV2 directory)
 * motor_test.py (code from V2 robot still current)
 * distance_test.py  (code from V2 robot still current)
 * gun_test.py (starts up the laser sight, starts the motors and then fires 5 darts)
