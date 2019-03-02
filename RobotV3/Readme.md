@@ -36,3 +36,8 @@ Recommend starting with driving your robot's motors and reading the UDS sensors.
 Use the example code I have provided, which contain comments to explain how it works:
 * motor_test.py
 * distance_test.py
+* gun_test.py
+
+For the remote control tasks, we have bluetooth paired a Playstation3 controller and use this library (see the remote_contol.py code):
+https://approxeng.github.io/approxeng.input/
+
