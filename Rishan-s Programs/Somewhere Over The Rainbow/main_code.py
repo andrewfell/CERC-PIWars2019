@@ -11,8 +11,11 @@ import time
 import CERCBot
 
 camera = PiCamera()
-camera.rotation = 180
+x_max = 400
+y_max = 400
+camera.resolution = (x_max, y_max)
 threshhold = 50 #pixels
+max_val = 30000
 burt_the_robot = Robot(left=(20, 21), right=(7, 8))
 left_echo_pin = 14
 left_trigger_pin = 15
@@ -32,14 +35,14 @@ upper_red1 = [370/2, (85*255)/100, (90*255)/100]
 lower_red2 = [320/2, (60*255)/100, (50*255)/100]
 upper_red2 = [370/2, (85*255)/100, (90*255)/100]
 #Blue:
-lower_blue = [180/2, (10*255)/100, (40*255)/100]
-upper_blue = [250/2, (60*255)/100, (80*255)/100]
+lower_blue = [180/2, (20*255)/100, (30*255)/100]
+upper_blue = [210/2, (60*255)/100, (80*255)/100]
 #Green:
-lower_green = [70/2, (40*255)/100, (40*255)/100]
+lower_green = [65/2, (30*255)/100, (30*255)/100]
 upper_green = [90/2, (70*255)/100, (70*255)/100]
 #Yellow:
-lower_yellow = [40/2, (40*255)/100, (70*255)/100]
-upper_yellow = [60/2, (60*255)/100, (100*255)/100]
+lower_yellow = [40/2, (30*255)/100, (60*255)/100]
+upper_yellow = [60/2, (70*255)/100, (100*255)/100]
 # create NumPy arrays from the boundaries
 lower_red1 = np.array(lower_red1, dtype = "uint8")
 upper_red1 = np.array(upper_red1, dtype = "uint8")
@@ -51,7 +54,7 @@ lower_blue = np.array(lower_blue, dtype = "uint8")
 upper_blue = np.array(upper_blue, dtype = "uint8")
 lower_yellow = np.array(lower_yellow, dtype = "uint8")
 upper_yellow = np.array(upper_yellow, dtype = "uint8")
-colours = ['blue']
+colours = ['red','yellow','blue','green']
 img_dest = "/home/pi/colour.png"
 camera.resolution = (400, 400)
 print("centre")
@@ -82,7 +85,8 @@ for k in range(len(colours)):
     # Depending on colour, we need different masks
     # load the img
         img = cv2.imread(img_dest)
-        img = img[200:400, 0:400]
+        #img = img[200:400, 0:400]
+        img = img[0:x_max-120, 0:y_max-1]
         img = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
         img = cv2.GaussianBlur(img,(11,11),100) # The last value changes the amount of blur, in our case the highest
         
@@ -115,15 +119,17 @@ for k in range(len(colours)):
         ## and any of the distabnce is too less, i.e. it is either in the corner
         ## or head on to the colour that means it is done for that colour
         if (pix_cnt > threshhold):
-          if (m <= dis_m):
+          if (m <= dis_m) or ((pix_cnt > max_val) and (m < dis_m or l < dis_m or r < dis_m)):
               colourDone = True
               led.on()
               burt_the_robot.backward(speed_val)
+              sleep(sleep_val)
+              sleep(sleep_val)
           else:
             print("Going forward")
+            sleep_val = 0.3
+            speed_val = 0.4
             burt_the_robot.forward(speed_val)
-            if (m < 2*dis):
-                speed_val = sl/2
         else:
         ## Turn left
             if l < dis and direction == "left":
@@ -144,7 +150,7 @@ for k in range(len(colours)):
                 burt_the_robot.backward(speed_val)
 
         sleep(sleep_val)
-        image_tg= "/home/pi/Pictures/" + str(filecnt) + "-" +  str(pix_cnt)  + "-" + str(l) + "-"  + str(m) + "-" + str(r) + "-" + ".png"
+        image_tg= "/home/pi/Pictures/" + str(myColour) + "-" + str(filecnt) + "-" +  str(pix_cnt)  + "-" + str(l) + "-"  + str(m) + "-" + str(r) + "-" + ".png"
         filecnt = filecnt + 1 
         call(["cp", img_dest, image_tg])
           # Remove pictures afterwards.
