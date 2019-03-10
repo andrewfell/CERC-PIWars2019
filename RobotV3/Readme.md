@@ -2,16 +2,12 @@ Code for Robot V3 platform.  Note GPIO mapping is currently as follows:
 
 Purpose       |  Component name       | GPIO Pin
 --------------|-----------------------|----------------
-Trigger pin   | Front Left UDS        | 15 
-Echo pin      | Front Left UDS        | 14
-Trigger pin   | Front Middle UDS      | 4
-Echo pin      | Front Middle UDS      | 17
-Trigger pin   | Front Right UDS       | 18
-Echo pin      | Front Right UDS       | 23
-Trigger pin   | Side Left UDS         | xx (any preference?)
-Echo pin      | Side Left UDS         | xx (any preference?)
-Trigger pin   | Side Right UDS        | xx (any preference?)
-Echo pin      | Side Right UDS        | xx (any preference?)
+Trigger pin   | Left UDS              | 15 
+Echo pin      | Left UDS              | 14
+Trigger pin   | Middle UDS            | 4
+Echo pin      | Middle UDS            | 17
+Trigger pin   | Right UDS             | 18
+Echo pin      | Right UDS             | 23
 Input 1       | Left motor            | 8
 Input 2       | Left motor            | 7
 Input 3       | Right motor           | 21
