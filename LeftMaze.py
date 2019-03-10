@@ -50,7 +50,7 @@ def go_right(speed):
 
 
 try:
-	while True:
+    while True:
 	
 		#take UDS readings
 		left_distance = CERCBot.calc_dist_cm(left_trigger_pin, left_echo_pin)
@@ -63,11 +63,11 @@ try:
 	#look for left turns if way ahead is available	
     if left_distance > threshold and centre_distance > threshold and right_distance < threshold:
 			go_left(fast)
-		elif left_distance > threshold and centre_distance < threshold and right_distance < threshold:
+    elif left_distance > threshold and centre_distance < threshold and right_distance < threshold:
 			go_left(fast)
 
-		elif left_distance < threshold2 and centre_distance < threshold2 and right_distance < threshold2:
-			print('Dead End')
+    elif left_distance < threshold2 and centre_distance < threshold2 and right_distance < threshold2:
+	                print('Dead End')
 			dead_end += 1
             go_right(slow)
 			sleep(0.1)	
