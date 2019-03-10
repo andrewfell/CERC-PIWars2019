@@ -34,6 +34,6 @@ Test code below:
 * distance_test.py  (code from V2 robot still current)
 * gun_test.py (starts up the laser sight, starts the motors and then fires 5 darts)
 
-For the remote control tasks, we have bluetooth paired a Playstation3 controller and use this library (see the remote_contol.py code):
-https://approxeng.github.io/approxeng.input/
+For the remote control tasks, we have bluetooth paired a Playstation3 controller for bluetooth pairing of the PS3 - see here: https://approxeng.github.io/approxeng.input/api/dualshock3.html#pairing
+Then the PS3 is read usin the pygame function - see remote_control.py ..  ref material here: https://www.pygame.org/docs/ref/joystick.html
 
