@@ -16,7 +16,7 @@ print('servo back')
 servo.angle=retract
 sleep(0.5)
 print('motors on')
-gun_motor.forward(0.9)
+gun_motor.forward(1)
 sleep(5)
 
 for x in range(5):
