@@ -14,4 +14,4 @@ for i in range(20):
     img_tg= "/home/pi/Pictures/image" + str(filecnt) + ".png"
     filecnt = filecnt + 1
     call(["cp", img_dest, img_tg])
-    sleep(2)      
+    sleep(3)      
