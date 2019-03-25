@@ -111,7 +111,10 @@ def main_loop():
             if colourDone == True:
                 done = True
                 burt_the_robot.backward(fwd_speed)
-                sleep(fwd_speed)
+                sleep(sl)
+                sleep(sl)
+                sleep(sl)
+                sleep(sl)
                 print('Finished looking for colour')
 
             print('Finding colour',myColour)
@@ -265,7 +268,6 @@ def main_loop():
 
             ##
     burt_the_robot.backward(fwd_speed)
-    sleep(sl)
     sleep(sl)
     burt_the_robot.stop()
 
