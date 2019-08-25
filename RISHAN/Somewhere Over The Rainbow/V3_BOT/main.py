@@ -9,7 +9,8 @@ from gpiozero import Robot, LED
 import time
 from bluedot import BlueDot
 from signal import pause
-# We'll use the distance sensor module in our CERCBot library (CERCBot.py)
+# We'll use the distance sensor module in our 
+# CERCBot library (CERCBot.py)
 import CERCBot
 
 camera = PiCamera()
@@ -43,7 +44,6 @@ dis_m = 11
 sl = 0.3
 counter = 0
 colourDone = False
-
 #Red:
 lower_red = [300/2, (30*2.55), (40*2.55)]
 upper_red = [365/2, (80*2.55), (90*2.55)]
@@ -156,7 +156,6 @@ def main_loop():
                     pic_on_left = True
                   else:
                     pic_on_left = False
-
                   print("pix_left_cnt = ",pix_left_cnt," pix_right_cnt = ",pix_right_cnt)
                   print("Going forward")
                   burt_the_robot.forward(fwd_speed)  
@@ -181,7 +180,7 @@ def main_loop():
                             direction = "backward"
                         else:
                             direction = "left"
-                          
+                         
                     got_pixel = False 
                     print("Changing direction to ",direction)
                     if direction == "left":
@@ -192,7 +191,6 @@ def main_loop():
                         burt_the_robot.forward(fwd_speed)
                     else:
                         burt_the_robot.backward(fwd_speed)
-
                 sleep(sleep_val)
                 image_tg= "/home/pi/Pictures/" + str(myColour) + "-" + str(filecnt) + "-" +  str(pix_cnt)  + "-" + str(l) + "-"  + str(m) + "-" + str(r) + "-" + ".png"
                 filecnt = filecnt + 1 
@@ -201,27 +199,29 @@ def main_loop():
                 # show the imgs
                 #cv2.imshow("img", np.hstack([img, output]))
                 #cv2.waitKey(0)
-
-            ##
     burt_the_robot.backward(fwd_speed)
     sleep(sl)
     sleep(sl)
     burt_the_robot.stop()
 
-def dpad(pos):
+  def dpad(pos):
     global counter
     # pressed any button yet to change it by 1
     if pos.top:
-        print("up") # If the position of the press is up, then print 'up' 
-        set_colour() # and call the set_colour() function
+        # If the position of the press is up, then print 'up' 
+        print("up") 
+        # and call the set_colour() function
+        set_colour() 
     if pos.bottom:
         print("down") # If the position of the press is down, print 'down' 
         counter += 1 # and change 'counter' by 1 because we have now pressed
         # the bottom part of the button
         if counter <= 1:
-            main_loop() # Call the main_loop function# If the 'counter' is greater than or less than 2, which
+            # Call the main_loop function# If the 'counter' is 
+            # greater than or less than 2, which
             # means we have pressed the bottom part of the button twice,
-    # then break out of the 'if pos.bottom' loop so
+            main_loop() 
+          
 bd.when_pressed = dpad
 pause()
 
