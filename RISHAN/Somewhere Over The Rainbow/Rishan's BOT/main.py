@@ -69,12 +69,12 @@ def set_colour():
 
 def main_loop():
     global colourDone 
-    print("centre")
-    centre_distance = CERCBot.calc_dist_cm_v2(centre_trigger_pin, centre_echo_pin)
-    print("right")
-    right_distance = CERCBot.calc_dist_cm_v2(right_trigger_pin, right_echo_pin)
-    print("left")
-    left_distance = CERCBot.calc_dist_cm_v2(left_trigger_pin, left_echo_pin)
+#     print("centre")
+#     centre_distance = CERCBot.calc_dist_cm_v2(centre_trigger_pin, centre_echo_pin)
+#     print("right")
+#     right_distance = CERCBot.calc_dist_cm_v2(right_trigger_pin, right_echo_pin)
+#     print("left")
+#     left_distance = CERCBot.calc_dist_cm_v2(left_trigger_pin, left_echo_pin)
     # In the specific order ('red','blue','yellow','green'), go to each zone
     #and stop when it is less than 15cm away.
     led.off()
@@ -136,10 +136,10 @@ def main_loop():
             #print ("pix_cnt ",pix_cnt)
             
             #print ("pix_cnt = ",pix_cnt, " red = ",red, "green = ",green,"blue = ",blue)
-            r = CERCBot.calc_dist_cm_v2(right_trigger_pin, right_echo_pin)
-            l = CERCBot.calc_dist_cm_v2(left_trigger_pin,left_echo_pin)
-            m = CERCBot.calc_dist_cm_v2(centre_trigger_pin, centre_echo_pin)
-            print(' l= ',l," m = ",m," r = ",r," pix_cnt = ",pix_cnt," threshold = ",threshhold)
+#             r = CERCBot.calc_dist_cm_v2(right_trigger_pin, right_echo_pin)
+#             l = CERCBot.calc_dist_cm_v2(left_trigger_pin,left_echo_pin)
+#             m = CERCBot.calc_dist_cm_v2(centre_trigger_pin, centre_echo_pin)
+#             print(' l= ',l," m = ",m," r = ",r," pix_cnt = ",pix_cnt," threshold = ",threshhold)
 
             ## If colour is greater than threshold (i.e. it is looking at it clearly
             ## and any of the distabnce is too less, i.e. it is either in the corner

@@ -92,7 +92,7 @@ v_lower = 255
 myfolder = './red'
 for k in range(len(colours)):
     myColour = colours[k]
-    myfolder = './' + myColour
+    myfolder = '/home/pi/' + myColour
     for img_dest in os.listdir(myfolder):
         myfilepath = myfolder + '/' + img_dest
         print('Finding colour',myColour, " in ",myfilepath)
