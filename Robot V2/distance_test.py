@@ -23,9 +23,6 @@ while True:
     #take a reading from the left, centre and right Ultra Sound Distance Sensors
     left_distance = CERCBot.calc_dist_cm(left_trigger_pin, left_echo_pin)
     centre_distance = CERCBot.calc_dist_cm(centre_trigger_pin, centre_echo_pin)
-#     left_distance = 0
-#     centre_distance = 0
-    #right_distance = 0
     right_distance = CERCBot.calc_dist_cm(right_trigger_pin, right_echo_pin)
 
     # Print out the measurements
