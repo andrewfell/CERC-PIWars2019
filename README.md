@@ -13,3 +13,7 @@ https://github.com/andrewfell/CERC-PIWars2019/tree/master/RobotV3
 PIWars Team Presentation
 
 https://docs.google.com/presentation/d/1TYzGwce0wlGXJSUnaA0jGVk18jVnC8MG6VKtf2_whmQ/edit?usp=sharing
+
+PiWars Mini Conference Presentation:
+https://www.youtube.com/watch?v=yTO21Y00R-c
+https://piwarsmc.org/2019/My_Pi_Wars_Journey.pptx
