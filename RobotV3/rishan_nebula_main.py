@@ -78,7 +78,7 @@ lower_blue = np.array(lower_blue, dtype = "uint8")
 upper_blue = np.array(upper_blue, dtype = "uint8")
 lower_yellow = np.array(lower_yellow, dtype = "uint8")
 upper_yellow = np.array(upper_yellow, dtype = "uint8")
-colours = ['red','blue','yellow','green']
+colours = ['yellow']
 img_dest = "/home/pi/colour.png"
 
 def set_colour():
@@ -261,7 +261,7 @@ def main_loop():
                         burt_the_robot.backward(fwd_speed)
 
                 sleep(sleep_val)
-                image_tg= "/home/pi/Pictures/" + str(myColour) + "-" + str(filecnt) + "-" +  str(pix_cnt)  + "-" + str(l) + "-"  + str(m) + "-" + str(r) + "-" + ".png"
+                image_tg= "/home/pi/Pictures/" + str(myColour) + "-" + str(filecnt) + "-" +  str(pix_cnt) + ".png"
                 filecnt = filecnt + 1 
                 call(["cp", img_dest, image_tg])
                   # Remove pictures afterwards.
