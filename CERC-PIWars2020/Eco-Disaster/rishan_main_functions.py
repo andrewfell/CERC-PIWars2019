@@ -5,6 +5,7 @@ import os
 import cv2
 import mask
 
+captured = False
 x_max = 400
 y_max = 400
 x_mod = x_max-130
@@ -43,16 +44,14 @@ def is_black(h,s,v):
     return (black or black2)
 
 
-green_barrel_source_dir = "../Pictures/green_barrel"
-red_barrel_source_dir = "../Pictures/red_barrel"
+green_barrel_source_dir = "/home/pi/Pictures/green_barrel"
+red_barrel_source_dir = "/home/pi/Pictures/red_barrel"
 
 ## Green barrel
 myfolder=green_barrel_source_dir
 ## Iterate for each picture
-print('Finding colour green in ',myfolder)
 for img in os.listdir(myfolder):
     myfilepath = myfolder + '/' + img
-    print('Finding colour green in picture ',myfilepath)
     img = cv2.imread(myfilepath)
     #print(img.shape)
     #img = img[0:270, 0:399]
@@ -79,18 +78,28 @@ for img in os.listdir(myfolder):
     maskb = cv2.inRange(img, mask.lower_blue, mask.upper_blue)
     pixb_cnt = (maskb==255).sum()
     
-    maskg = cv2.inRange(img, mask.lower_green, mask.upper_green)
-    pixg_cnt = (maskg==255).sum()
+    upper_maskg = cv2.inRange(img_up, mask.lower_green, mask.upper_green)
+    upper_pixg_cnt = (upper_maskg==255).sum()
+    
+    lower_maskg = cv2.inRange(img_down, mask.lower_green, mask.upper_green)
+    lower_pixg_cnt = (lower_maskg==255).sum()
+    
     masky = cv2.inRange(img, mask.lower_yellow, mask.upper_yellow)
     pixy_cnt = (masky==255).sum()
     
-    print("==========================================")
-    print("myfilepath = ",myfilepath)
+    if lower_pixg_cnt > upper_pixg_cnt:
+        captured = True
+    else:
+        captured = False
+        
+    print ("==========================================")
+    print ("filepath = ",myfilepath)
     print ("pixr_cnt = ",pixr_cnt)
-    print ("pixg_cnt = ",pixg_cnt)
-    print ("pixg_down_cnt = ",img_down)
+    print ("pixg_up_cnt = ",upper_pixg_cnt)
+    print ("pixg_down_cnt = ",lower_pixg_cnt)
     print ("pixb_cnt = ",pixb_cnt)
     print ("pixy_cnt = ",pixy_cnt)
+    print ("is captured = ",captured)
     print("==========================================")
     
     
