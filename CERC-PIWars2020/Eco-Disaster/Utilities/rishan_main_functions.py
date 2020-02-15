@@ -53,18 +53,19 @@ folder=green_barrel_source_dir
 for img in os.listdir(folder):
     filepath = folder + '/' + img
     img = cv2.imread(filepath)
+    img = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
     #print(img.shape)
     #img = img[0:270, 0:399]
     cv2.imshow("img", np.hstack([img]))
     cv2.waitKey(0)
     img_down = img[round(img.shape[0]/2):img.shape[0],0:(img.shape[1]-1)]
-    img_up = img[0:round(img.shape[0]/2),0:img.shape[1]]
+    img_up = img[0:round(img.shape[0]/5),0:img.shape[1]]
+
+    cv2.imshow("img", np.hstack([img_up]))
+    cv2.waitKey(0)
     
     img_left = img[0:img.shape[1],0:round(img.shape[0]/2)]
     img_right = img[0:(img.shape[1]-1),round(img.shape[0]/2):img.shape[0]]
-
-    img = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
-    img = cv2.GaussianBlur(img,(11,11),100) # The last value changes the amount of blur, in our case the highest
     
     # Red values #
     maskr1 = cv2.inRange(img, mask.lower_red1, mask.upper_red1)
@@ -128,8 +129,11 @@ for img in os.listdir(folder):
         captured = False
     
     print("==========================================================")
+    
     print("image = ",filepath)
     print("Threshold= ",threshhold)
+    print("Captured = ",captured)
+    
     print("========================GREEN=============================")
     print("lower_pixg = ",lower_pixg_cnt)
     print("upper_pixg = ",upper_pixg_cnt)
@@ -153,6 +157,5 @@ for img in os.listdir(folder):
     print("upper_pixy = ",upper_pixy_cnt)
     print("right_pixy = ",right_pixy_cnt)
     print("left_pixy = ",left_pixy_cnt)
-    print('\n')
-    print("Captured = ",captured)
+
     print("==========================================================")
