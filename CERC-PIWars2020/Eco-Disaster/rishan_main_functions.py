@@ -58,22 +58,21 @@ for img in os.listdir(myfolder):
     cv2.imshow("img", np.hstack([img]))
     cv2.waitKey(0)
     img_down = img[round(img.shape[0]/2):img.shape[0],0:(img.shape[1]-1)]
-    cv2.imshow("img_down", np.hstack([img_down]))
-    cv2.waitKey(0)
+#     cv2.imshow("img_down", np.hstack([img_down]))
+#     cv2.waitKey(0)
     img_up = img[0:round(img.shape[0]/2),0:img.shape[1]]
-    cv2.imshow("img_up", np.hstack([img_up]))
-    cv2.waitKey(0)
+#     cv2.imshow("img_up", np.hstack([img_up]))
+#     cv2.waitKey(0)
     img = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
     img = cv2.GaussianBlur(img,(11,11),100) # The last value changes the amount of blur, in our case the highest
-     
-    #row,col = maskr.shape
-    #for i in range(row):
-    #    for j in range(col):
-    #        print("PIX = ", maskr[i,j])
-   
+
     maskr1 = cv2.inRange(img, mask.lower_red1, mask.upper_red1)
     maskr2 = cv2.inRange(img, mask.lower_red2, mask.upper_red2)
-    pixr_cnt = (maskr1==255).sum()  + (maskr2==255).sum() 
+    upper_pixr_cnt = (maskr1==255).sum() + (maskr2==255).sum()
+    
+    lower_maskr1 = cv2.inRange(img_down, mask.lower_red1, mask.upper_red1)
+    lower_maskr2 = cv2.inRange(img_down, mask.lower_red2, mask.upper_red2)
+    lower_pixr_cnt = (lower_maskr1==255).sum() + (lower_maskr2==255).sum()
     
     maskb = cv2.inRange(img, mask.lower_blue, mask.upper_blue)
     pixb_cnt = (maskb==255).sum()
@@ -87,23 +86,22 @@ for img in os.listdir(myfolder):
     masky = cv2.inRange(img, mask.lower_yellow, mask.upper_yellow)
     pixy_cnt = (masky==255).sum()
     
-    if lower_pixg_cnt > upper_pixg_cnt:
+    if lower_pixg_cnt > upper_pixg_cnt or lower_pixr_cnt > upper_pixr_cnt:
         captured = True
     else:
         captured = False
         
     print ("==========================================")
     print ("filepath = ",myfilepath)
-    print ("pixr_cnt = ",pixr_cnt)
+    print ("Threshold = ",threshhold)
+    print ("pixr_up_cnt = ",upper_pixr_cnt)
+    print ("pixr_down_cnt = ",lower_pixr_cnt)
     print ("pixg_up_cnt = ",upper_pixg_cnt)
     print ("pixg_down_cnt = ",lower_pixg_cnt)
     print ("pixb_cnt = ",pixb_cnt)
     print ("pixy_cnt = ",pixy_cnt)
     print ("is captured = ",captured)
     print("==========================================")
-    
-    
-    
  
     ## If colour is greater than threshold (i.e. it is looking at it clearly
     ## and any of the distabnce is too less, i.e. it is either in the corner
